@@ -219,13 +219,11 @@ export default function Layout({ props }) {
 											{messages
 												?.map((message, index) => (
 													<a
+														key={index}
 														href={message.data.explorer_url}
 														className="group w-full"
 													>
-														<div
-															key={index}
-															className=" pt-2 pb-2  flex items-center"
-														>
+														<div className=" pt-2 pb-2  flex items-center">
 															<span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
 																<svg
 																	className="group-hover:text-indigo-200 h-full w-full text-gray-300"
