@@ -16,15 +16,24 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "@hashgraph/sdk": "^2.6.0",
+    "@headlessui/react": "^1.6.6",
+    "@heroicons/react": "^1.0.6",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
+    "money-clip": "^3.0.5",
     "next": "^12.0.7",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0",
+    "redux-form": "^8.3.8",
+    "redux-persist-middleware": "^1.0.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
     "@babel/plugin-transform-react-jsx": "^7.10.4",
+    "@tailwindcss/forms": "^0.5.2",
+    "autoprefixer": "^10.4.7",
     "babel-eslint": "^9.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -38,6 +47,8 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.4.0",
     "node-mocks-http": "^1.8.1",
-    "prettier": "1.19.1"
+    "postcss": "^8.4.14",
+    "prettier": "1.19.1",
+    "tailwindcss": "^3.1.6"
   }
 }
