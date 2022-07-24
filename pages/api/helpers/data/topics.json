@@ -1,0 +1,7 @@
+[
+	{
+		"name": "Personal",
+		"href": "/app/${topic_id}",
+		"current": true
+	}
+]

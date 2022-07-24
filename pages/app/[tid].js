@@ -1,7 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { PaperAirplaneIcon, UsersIcon, XIcon } from '@heroicons/react/outline'
-import { Fragment, useState, useEffect, componentWillMount } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+
+// import { topicsRepo } from '../api/helpers/topics'
+
+// let topics = require('./data/topics.json')
 
 const topic_id = '0.0.47732850'
 
@@ -27,7 +31,7 @@ export default function Layout({ props }) {
 	const router = useRouter()
 	const { tid } = router.query
 	const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [messages, setMessages] = useState([]) //, `messages-${tid}`)
+	const [messages, setMessages] = useStickyState([], `message`)
 	const [topics, setTopics] = useState([
 		{
 			name: `Personal`,
@@ -37,6 +41,9 @@ export default function Layout({ props }) {
 		}
 	])
 	const [curMessage, setCurMessage] = useState(String)
+	// useEffect(() => {
+	// 	window.localStorage.clear()
+	// })
 
 	const fetchData = async ({ message, reference }) => {
 		const res = await fetch('http://localhost:3000/api/consensus/message/', {
@@ -55,6 +62,7 @@ export default function Layout({ props }) {
 		const status = await res.json()
 
 		if (status.data) {
+			// eslint-disable-next-line radix
 			const date = new Date(parseInt(status.data.reference))
 			status.data.reference = date.toLocaleString('en-US')
 
@@ -62,6 +70,7 @@ export default function Layout({ props }) {
 		}
 		return [{}, undefined]
 	}
+	// console.log(topicsRepo?.getAll())
 
 	return (
 		<>
@@ -172,7 +181,7 @@ export default function Layout({ props }) {
 											'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
 										)}
 									>
-										<item.icon
+										<UsersIcon
 											className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
 											aria-hidden="true"
 										/>
