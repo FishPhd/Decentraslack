@@ -36,6 +36,9 @@ export default function Layout({ props }) {
 	const [sidebarOpen, setSidebarOpen] = useState(false)
 	const [messages, setMessages] = useStickyState([], `messages`)
 	const [curMessage, setCurMessage] = useState(String)
+	// useEffect(() => {
+	// 	window.localStorage.clear()
+	// })
 
 	const fetchData = async ({ message, reference }) => {
 		const res = await fetch('http://localhost:3000/api/consensus/message/', {
@@ -54,6 +57,7 @@ export default function Layout({ props }) {
 		const status = await res.json()
 
 		if (status.data) {
+			// eslint-disable-next-line radix
 			const date = new Date(parseInt(status.data.reference))
 			status.data.reference = date.toLocaleString('en-US')
 
@@ -63,6 +67,7 @@ export default function Layout({ props }) {
 	}
 	// console.log(topicsRepo.topics)
 	const t = topicsRepo.getAll()
+
 	return (
 		<>
 			<div>
@@ -125,7 +130,7 @@ export default function Layout({ props }) {
 										<nav className="px-2 space-y-1">
 											{t?.map((item, index) => (
 												<a
-													key={item.name + index}
+													key={`${item.name + index}_message`}
 													href={item.href}
 													className={classNames(
 														item.current
@@ -163,7 +168,7 @@ export default function Layout({ props }) {
 							<nav className="flex-1 px-2 pb-4 space-y-1">
 								{t?.map(item => (
 									<a
-										key={item.name}
+										key={`${item.name + index}mobile`}
 										href={item.href}
 										className={classNames(
 											item.current
@@ -181,17 +186,17 @@ export default function Layout({ props }) {
 								))}
 								<button
 									onClick={() => {
-										const id = '0.0.47732851'
-										setTopics(arr => [
-											...arr,
-											{
-												name: `Private`,
-												id,
-												href: `/app/${id}`,
-												icon: UsersIcon,
-												current: tid === id
-											}
-										])
+										// const id = '0.0.47732851'
+										// setTopics(arr => [
+										// 	...arr,
+										// 	{
+										// 		name: `Private`,
+										// 		id,
+										// 		href: `/app/${id}`,
+										// 		icon: UsersIcon,
+										// 		current: tid === id
+										// 	}
+										// ])
 									}}
 									type="button"
 									className="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 xl:w-full"
