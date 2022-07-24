@@ -27,7 +27,7 @@ export default function Layout({ props }) {
 	const router = useRouter()
 	const { tid } = router.query
 	const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [messages, setMessages] = useStickyState([], 'messages')
+	const [messages, setMessages] = useState([]) //, `messages-${tid}`)
 	const [topics, setTopics] = useState([
 		{
 			name: `Personal`,
@@ -48,7 +48,7 @@ export default function Layout({ props }) {
 			body: JSON.stringify({
 				message,
 				reference,
-				tid,
+				topic_id: tid,
 				allow_synchronous_consensus: true
 			})
 		})
@@ -125,7 +125,7 @@ export default function Layout({ props }) {
 										<nav className="px-2 space-y-1">
 											{topics?.map((item, index) => (
 												<a
-													key={item.name + index}
+													key={`${item.name + index}_message`}
 													href={item.href}
 													className={classNames(
 														item.current
@@ -161,9 +161,9 @@ export default function Layout({ props }) {
 						</div>
 						<div className="mt-5 flex-1 flex flex-col">
 							<nav className="flex-1 px-2 pb-4 space-y-1">
-								{topics?.map(item => (
+								{topics?.map((item, index) => (
 									<a
-										key={item.name}
+										key={`${item.name + index}mobile`}
 										href={item.href}
 										className={classNames(
 											item.current
@@ -181,17 +181,17 @@ export default function Layout({ props }) {
 								))}
 								<button
 									onClick={() => {
-										const id = '0.0.47732851'
-										setTopics(arr => [
-											...arr,
-											{
-												name: `Private`,
-												id,
-												href: `/app/${id}`,
-												icon: UsersIcon,
-												current: tid === id
-											}
-										])
+										// const id = '0.0.47732851'
+										// setTopics(arr => [
+										// 	...arr,
+										// 	{
+										// 		name: `Private`,
+										// 		id,
+										// 		href: `/app/${id}`,
+										// 		icon: UsersIcon,
+										// 		current: tid === id
+										// 	}
+										// ])
 									}}
 									type="button"
 									className="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 xl:w-full"
@@ -219,13 +219,11 @@ export default function Layout({ props }) {
 											{messages
 												?.map((message, index) => (
 													<a
+														key={`${index}mobile`}
 														href={message.data.explorer_url}
 														className="group w-full"
 													>
-														<div
-															key={index}
-															className=" pt-2 pb-2  flex items-center"
-														>
+														<div className=" pt-2 pb-2  flex items-center">
 															<span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
 																<svg
 																	className="group-hover:text-indigo-200 h-full w-full text-gray-300"
