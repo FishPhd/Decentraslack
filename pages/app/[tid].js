@@ -1,16 +1,21 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { PaperAirplaneIcon, UsersIcon, XIcon } from '@heroicons/react/outline'
+import {
+	PaperAirplaneIcon,
+	UserIcon,
+	UsersIcon,
+	XIcon
+} from '@heroicons/react/outline'
 import { Fragment, useState, useEffect, componentWillMount } from 'react'
 import { useRouter } from 'next/router'
 
 import { topicsRepo } from '../api/helpers/topics'
 
-const topic_id = '0.0.47732850'
-
 function useStickyState(defaultValue, key) {
 	if (typeof window !== 'undefined') {
 		const [value, setValue] = useState(() => {
+			console.log(key)
 			const stickyValue = window.localStorage.getItem(key)
+			console.log(stickyValue)
 			return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue
 		})
 		useEffect(() => {
@@ -29,15 +34,7 @@ export default function Layout({ props }) {
 	const router = useRouter()
 	const { tid } = router.query
 	const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [messages, setMessages] = useStickyState([], 'messages')
-	const [topics, setTopics] = useState([
-		{
-			name: `Personal`,
-			href: `/app/${topic_id}`,
-			icon: UsersIcon,
-			current: true
-		}
-	])
+	const [messages, setMessages] = useStickyState([], `messages`)
 	const [curMessage, setCurMessage] = useState(String)
 
 	const fetchData = async ({ message, reference }) => {
@@ -64,7 +61,8 @@ export default function Layout({ props }) {
 		}
 		return [{}, undefined]
 	}
-
+	// console.log(topicsRepo.topics)
+	const t = topicsRepo.getAll()
 	return (
 		<>
 			<div>
@@ -125,7 +123,7 @@ export default function Layout({ props }) {
 									</div>
 									<div className="mt-5 flex-1 h-0 overflow-y-auto">
 										<nav className="px-2 space-y-1">
-											{topics?.map((item, index) => (
+											{t?.map((item, index) => (
 												<a
 													key={item.name + index}
 													href={item.href}
@@ -136,7 +134,7 @@ export default function Layout({ props }) {
 														'group flex items-center px-2 py-2 text-base font-medium rounded-md'
 													)}
 												>
-													<item.icon
+													<UserIcon
 														className="mr-4 flex-shrink-0 h-6 w-6 text-indigo-300"
 														aria-hidden="true"
 													/>
@@ -163,7 +161,7 @@ export default function Layout({ props }) {
 						</div>
 						<div className="mt-5 flex-1 flex flex-col">
 							<nav className="flex-1 px-2 pb-4 space-y-1">
-								{topics?.map(item => (
+								{t?.map(item => (
 									<a
 										key={item.name}
 										href={item.href}
@@ -174,7 +172,7 @@ export default function Layout({ props }) {
 											'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
 										)}
 									>
-										<item.icon
+										<UserIcon
 											className="mr-3 flex-shrink-0 h-6 w-6 text-indigo-300"
 											aria-hidden="true"
 										/>

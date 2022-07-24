@@ -1,7 +1,12 @@
 [
 	{
 		"name": "Personal",
-		"href": "/app/${topic_id}",
+		"href": "/app/0.0.47732850",
 		"current": true
+	},
+	{
+		"name": "Private",
+		"href": "/app/0.0.47732851",
+		"current": false
 	}
 ]
