@@ -183,25 +183,20 @@ export default function Layout({ props }) {
 										{item.name}
 									</a>
 								))}
-								<button
+								{/* <button
 									onClick={() => {
-										// const id = '0.0.47732851'
-										// setTopics(arr => [
-										// 	...arr,
-										// 	{
-										// 		name: `Private`,
-										// 		id,
-										// 		href: `/app/${id}`,
-										// 		icon: UsersIcon,
-										// 		current: tid === id
-										// 	}
-										// ])
+										const id = '0.0.47732852'
+										topicsRepo.create({
+											name: `Test`,
+											id,
+											href: `/app/${id}`
+										})
 									}}
 									type="button"
 									className="inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 xl:w-full"
 								>
 									New Channel
-								</button>
+								</button> */}
 							</nav>
 						</div>
 					</div>

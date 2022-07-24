@@ -2,13 +2,11 @@
 	{
 		"name": "Personal",
 		"id": "0.0.47732850",
-		"href": "/app/0.0.47732850",
-		"current": true
+		"href": "/app/0.0.47732850"
 	},
 	{
 		"name": "Private",
 		"id": "0.0.47732851",
-		"href": "/app/0.0.47732851",
-		"current": false
+		"href": "/app/0.0.47732851"
 	}
 ]
