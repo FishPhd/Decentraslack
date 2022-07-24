@@ -18,16 +18,10 @@
     "@hashgraph/sdk": "^2.6.0",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
-    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
-    "money-clip": "^3.0.5",
     "next": "^12.0.7",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^8.0.2",
-    "redux": "^4.2.0",
-    "redux-form": "^8.3.8",
-    "redux-persist-middleware": "^1.0.1"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.10.4",
