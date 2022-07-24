@@ -48,7 +48,7 @@ export default function Layout({ props }) {
 			body: JSON.stringify({
 				message,
 				reference,
-				tid,
+				topic_id: tid,
 				allow_synchronous_consensus: true
 			})
 		})
