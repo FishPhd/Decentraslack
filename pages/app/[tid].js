@@ -12,18 +12,22 @@ import { topicsRepo } from '../api/helpers/topics'
 
 function useStickyState(defaultValue, key) {
 	if (typeof window !== 'undefined') {
-		const [value, setValue] = useState(() => {
-			console.log(key)
+		const [value, setValue] = useState()
+		useEffect(() => {
 			const stickyValue = window.localStorage.getItem(key)
-			console.log(stickyValue)
-			return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue
-		})
+			try {
+				setValue(stickyValue !== null ? JSON.parse(stickyValue) : defaultValue)
+			} catch {
+				setValue(defaultValue)
+			}
+		}, [key])
+
 		useEffect(() => {
 			window.localStorage.setItem(key, JSON.stringify(value))
 		}, [key, value])
 		return [value, setValue]
 	}
-	return [undefined, () => {}]
+	return [defaultValue, () => {}]
 }
 
 function classNames(...classes) {
@@ -34,11 +38,8 @@ export default function Layout({ props }) {
 	const router = useRouter()
 	const { tid } = router.query
 	const [sidebarOpen, setSidebarOpen] = useState(false)
-	const [messages, setMessages] = useStickyState([], `messages`)
+	const [messages, setMessages] = useStickyState([], `messages-${tid}`)
 	const [curMessage, setCurMessage] = useState(String)
-	// useEffect(() => {
-	// 	window.localStorage.clear()
-	// })
 
 	const fetchData = async ({ message, reference }) => {
 		const res = await fetch('http://localhost:3000/api/consensus/message/', {
@@ -50,7 +51,7 @@ export default function Layout({ props }) {
 			body: JSON.stringify({
 				message,
 				reference,
-				topic_id: tid,
+				topic_id: '0.0.47732850',
 				allow_synchronous_consensus: true
 			})
 		})
@@ -60,12 +61,10 @@ export default function Layout({ props }) {
 			// eslint-disable-next-line radix
 			const date = new Date(parseInt(status.data.reference))
 			status.data.reference = date.toLocaleString('en-US')
-
 			return setMessages(arr => [{ data: status.data, message }, ...arr])
 		}
 		return [{}, undefined]
 	}
-	// console.log(topicsRepo.topics)
 	const t = topicsRepo.getAll()
 
 	return (
@@ -133,7 +132,7 @@ export default function Layout({ props }) {
 													key={`${item.name + index}_message`}
 													href={item.href}
 													className={classNames(
-														item.current
+														item.id === tid
 															? 'bg-indigo-800 text-white'
 															: 'text-indigo-100 hover:bg-indigo-600',
 														'group flex items-center px-2 py-2 text-base font-medium rounded-md'
@@ -166,12 +165,12 @@ export default function Layout({ props }) {
 						</div>
 						<div className="mt-5 flex-1 flex flex-col">
 							<nav className="flex-1 px-2 pb-4 space-y-1">
-								{t?.map(item => (
+								{t?.map((item, index) => (
 									<a
 										key={`${item.name + index}mobile`}
 										href={item.href}
 										className={classNames(
-											item.current
+											item.id === tid
 												? 'bg-indigo-800 text-white'
 												: 'text-indigo-100 hover:bg-indigo-600',
 											'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -240,7 +239,7 @@ export default function Layout({ props }) {
 															</span>
 
 															<div className="ml-3">
-																<p className=" group-hover:text-indigo-200  text-sm font-medium text-gray-700 group-hover:text-gray-900">
+																<p className=" group-hover:text-indigo-200  text-sm font-medium text-gray-700 ">
 																	{message.message}
 																</p>
 																<p className="text-xs font-medium text-gray-500 group-hover:text-indigo-300">
