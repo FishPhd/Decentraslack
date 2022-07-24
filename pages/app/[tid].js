@@ -3,6 +3,8 @@ import { PaperAirplaneIcon, UsersIcon, XIcon } from '@heroicons/react/outline'
 import { Fragment, useState, useEffect, componentWillMount } from 'react'
 import { useRouter } from 'next/router'
 
+import { topicsRepo } from '../api/helpers/topics'
+
 const topic_id = '0.0.47732850'
 
 function useStickyState(defaultValue, key) {

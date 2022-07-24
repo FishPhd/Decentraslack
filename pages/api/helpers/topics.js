@@ -3,7 +3,7 @@ const fs = require('fs')
 let topics = require('./data/topics.json')
 
 export const topicsRepo = {
-	getAll: () => topics,
+	topics,
 	create
 }
 
